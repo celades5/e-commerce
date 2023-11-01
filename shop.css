@@ -1,0 +1,96 @@
+.Add {
+    background-color: #9ACD32;
+    color: #333;
+    border: none;
+    border-radius: 50%;
+    padding: 15px 30px;
+    transition: all 0.3s;
+}
+
+.Add:hover {
+    background-color: #6B8E23;
+    transform: scale(1.1);
+}
+
+.Remove {
+    background-color: #FF6B6B;
+    color: #333;
+    border: none;
+    border-radius: 50%;
+    padding: 15px 30px;
+    transition: all 0.3s;
+}
+.Remove:hover {
+    background-color: #FF3333;
+    transform: scale(1.1);
+}
+
+.Reset {
+    background-color: #FFC107;
+    color: #212529;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.Reset:hover {
+    background-color: #FFA000;
+    transform: scale(1.05);
+}
+
+.Carro {
+    background-color: #17A2B8;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.Carro:hover {
+    background-color: #138496;
+    transform: scale(1.05);
+}
+
+.page-container {
+    column-count: 2;
+    column-gap: 1%;
+}
+
+.card {
+    width: 100%;
+    margin-bottom: 1%;
+}
+
+.item-button {
+    background-color: #FFA500;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 15px 30px;
+    transition: all 0.3s;
+}
+
+.item-button:hover {
+    background-color: #FF8C00;
+    transform: scale(1.1);
+    color: #fff;
+}
+
+.Remove-Other-Item {
+    background-color: #FF5733;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 15px 30px;
+    transition: all 0.3s;
+}
+
+.Remove-Other-Item:hover {
+    background-color: #E64A2D;
+    transform: scale(1.1);
+    color: #fff;
+}

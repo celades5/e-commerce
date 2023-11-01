@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="shop.css">
+	<title>My Amazon</title>
+
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:LastModifiedDateTime_Client msdt:dt="string">2020-02-03T07:13:09Z</mso:LastModifiedDateTime_Client>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+
+<div class="page-container">
+    <button class="Carro" onclick="veureCarro()">Veure Carro</button>
+    <button class="Reset" onclick="ResetCarrito()">Reset</button>
+</div>
+
+
+</body>
+
+</html>
+
+<script>
+
+var data = [
+    { img: 'benjerry',   name: 'Ben & Jerry Ice Cream', price: 5.95, qtty: 0 },
+    { img: 'caffelatte', name: 'Caffè Latte',           price: 1.27, qtty: 0 },
+    { img: 'calippo',    name: 'Calippo Ice Pop',       price: 4.10, qtty: 0 },
+    { img: 'evax',       name: 'Evax Sanitary Pads',    price: 2.40, qtty: 0 },
+    { img: 'pizza',      name: 'Pizza',                 price: 4.95, qtty: 0 },
+    { img: 'scottex',    name: 'Scottex Toilet Paper',  price: 4.50, qtty: 0 },
+    { img: 'spaghetti',  name: 'Spaghetti',             price: 1.25, qtty: 0 },
+    { img: 'triangulos', name: 'Triangular Chips',      price: 2.35, qtty: 0 },
+    { img: 'xibeca',     name: 'Xibeca Beer',           price: 3.75, qtty: 0 },
+    { img: 'chipsahoy',  name: 'Chips Ahoy Cookies',    price: 2.20, qtty: 0 }
+];
+
+    function addItem(item) {
+        //revisem que el index al que volem accedir 
+        if (item >= 0 && item < data.length) {
+         // Incrementem la quantitat
+            data[item].qtty++;
+           // data[item.qtty].qtty++;
+            console.log(`Added 1 unit of ${data[item].name}. New quantity: ${data[item].qtty}`);
+
+            //Actualitzem el "carrito" amb la nova quantitat
+            let carCount = document.getElementById('indicador'+ item);
+            //let carCount = data[item].qtty;
+
+            //mirem que existeixi (no sigui null per exemple)
+            if (carCount) {
+             //if (carCount !== null) 
+             //accedim al contingut del text del element de la llista
+                //i a la quantitat actual del objecte.qtty i actualitzem perque tingui
+                //la nova quantitat
+                carCount.textContent = data[item.qtty].qtty;
+            } else {
+            console.log("Index no vàlid");
+            }
+        }
+   }
+
+
+    function removeItem(item) {
+      //revisem que el index al que volem accedir 
+        if (item >= 0 && item < data.length) {
+            if (data[item].qtty > 0) {
+                data[item].qtty--;
+                console.log(`Removed 1 unit of ${data[item].name}. New quantity: ${data[item].qtty}`);
+
+                //Actualitzem el "carrito" amb la nova quantitat
+                let carCount = document.getElementById('indicador' + item);
+                if (carCount) {
+                    carCount.textContent = data[item].qtty;
+                } else {
+                    console.log("Index no vàlid");
+                }
+            } else {
+                console.log(`La quantitat de ${data[item].name} ja és zero`);
+            }
+        }
+    }
+
+    function render_list_of_items() {
+        let container = document.querySelector('.page-container');
+
+        if (!container) {
+            console.log("Product container not found. REVISEU.");
+            return;
+        }
+
+        
+        // que executi per a cada item de data
+        data.forEach(function(product, index) {
+            //creem un element on es generaran les "targetes"
+            let targeta = document.createElement('div');
+            let imatge = document.createElement('img');
+            let price = document.createElement('p');
+            let prdname = document.createElement('p');
+            let title = document.createElement('h5');
+
+            //creem un element on es generaran els butons de afegir i treure
+            //i els hi assignem una classe
+            let addButton = document.createElement('button');
+            addButton.classList.add('item-button'); 
+            targeta.appendChild(addButton);
+            
+            
+            let removeButton = document.createElement('button');
+            removeButton.classList.add('item-button'); // Add a class to the button
+            targeta.appendChild(removeButton); 
+
+            //Posem el nom de cada item respectivament en el boto de afegir
+            //juntament amb la seva funcionalitat
+            targeta.classList.add('product-card'); 
+            addButton.textContent = `Afegir ${product.name}`;
+            addButton.onclick = function () {
+                addItem(index); 
+               
+            };
+
+            //Posem el nom de cada item respectivament en el boto de Treure
+            //juntament amb la seva funcionalitat
+            removeButton.textContent = `Treure ${product.name}`; 
+            removeButton.onclick = function () {
+                removeItem(index); 
+            };
+
+            //a cada item treiem per pantalla el seu nom i el seu preu
+            title.classList.add('card-title');
+            title.textContent = `Item: ${product.name}`;
+
+            imatge.src = 'assets/img/' + product.img + '.jpg';
+            prdname.textContent = product.name;
+            price.textContent = `Preu: ${product.price.toFixed(2)} €`;
+
+
+            //Afegim totes les caracteristiques necessaries a cada targeta de item
+            //imatge nom preu titol i boto
+            targeta.appendChild(imatge);
+            targeta.appendChild(prdname);
+            targeta.appendChild(price);
+            targeta.appendChild(title);
+            targeta.appendChild(addButton); 
+            targeta.appendChild(removeButton);
+            container.appendChild(targeta);
+
+            
+        });
+    }
+
+
+    function ResetCarrito() {
+        let previousQuantities = {};
+        let hasItems = false;
+
+        // Guardem les quantitats que hem comprat (>0)
+        data.forEach(function(product) {
+            if (product.qtty > 0) {
+                previousQuantities[product.name] = product.qtty;
+                hasItems = true;
+            }
+            product.qtty = 0; // Tornem a 0
+        });
+           if (!hasItems) {
+            alert('El carro ja està buit. No hi ha cap article per reiniciar.');
+            return;
+            }
+        //ensenyem per pantalla el que s'ha tret
+        let alertMessage = 'El carro ha tornat a 0.\n\n Quantitats tornades a 0:\n \n';
+
+        for (const productName in previousQuantities) {
+            alertMessage += `${productName}: (x${previousQuantities[productName]}) -> 0\n`;
+        }
+
+        alert(alertMessage);
+
+    }
+
+    function veureCarro() {//creem un array i un contador per guardar els items i el preu
+        let purchasedItems = {};
+        let totalPurchasedPrice = 0;
+
+        data.forEach(function(product) {//recorrem l'array i per cada item que tenim en el carro
+        //calculem el preu total d'aquest
+            if (product.qtty > 0) {
+                purchasedItems[product.name] = product.qtty;
+                totalPurchasedPrice += product.qtty * product.price;
+            }
+        });
+
+        if (Object.keys(purchasedItems).length > 0) {
+            let message = 'Items en el Carro:\n\n';
+            for (const itemName in purchasedItems) {
+                message += `${itemName} (x${purchasedItems[itemName]})\n`;
+            }
+            message += `\nPreu Total: ${totalPurchasedPrice.toFixed(2)} €`;
+            window.alert(message);
+        } else {
+            window.alert('No has posat cap item dins el carro de moment.');
+        }
+    }
+
+
+    
+    window.onload = function() {
+            render_list_of_items();
+    };
+
+
+</script>
